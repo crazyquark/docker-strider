@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  mongo:
+    build: 
+      context: mongo
+    volumes:
+      - "./data/mongo:/data/db"
+  strider:
+    build:
+      context: .
+    links:
+      - mongo
+    environment:
+      - "DB_URI=mongodb://mongo:27017"
+      - "GENERATE_ADMIN_USER=true"
+    ports:
+      - "8080:3000"
+
+
